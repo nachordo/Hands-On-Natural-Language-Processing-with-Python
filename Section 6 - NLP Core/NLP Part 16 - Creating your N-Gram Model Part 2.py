@@ -4,7 +4,7 @@
 # Importing libraries
 import random
 import nltk
-
+nltk.download('punkt')
 # Sample data
 text = """Global warming or climate change has become a worldwide concern. It is gradually developing into an unprecedented environmental crisis evident in melting glaciers, changing weather patterns, rising sea levels, floods, cyclones and droughts. Global warming implies an increase in the average temperature of the Earth due to entrapment of greenhouse gases in the earth’s atmosphere."""
 
@@ -35,3 +35,4 @@ for i in range(30):
     currentGram = ' '.join(rWords[len(rWords)-n:len(rWords)])
 
 print(result)
+

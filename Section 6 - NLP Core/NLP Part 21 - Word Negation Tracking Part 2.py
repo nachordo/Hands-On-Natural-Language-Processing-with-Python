@@ -28,3 +28,4 @@ for word in words:
         new_words.append(word)
 
 sentence = ' '.join(new_words)
+print(sentence)
