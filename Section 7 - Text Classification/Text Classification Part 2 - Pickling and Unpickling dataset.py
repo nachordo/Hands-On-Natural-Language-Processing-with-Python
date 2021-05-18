@@ -27,3 +27,10 @@ X_in = open('X.pickle','rb')
 y_in = open('y.pickle','rb')
 X = pickle.load(X_in)
 y = pickle.load(y_in)
+
+# Another
+with open('X.pickle','rb') as f1:
+    X2=pickle.load(f1)
+    
+with open('y.pickle','rb') as f2:
+    y2=pickle.load(f2)

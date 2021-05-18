@@ -31,16 +31,16 @@ y = pickle.load(y_in)
 
 # Creating the corpus
 corpus = []
-for i in range(0, 2000):
-    review = re.sub(r'\W', ' ', str(X[i]))
-    review = review.lower()
-    review = re.sub(r'^br$', ' ', review)
-    review = re.sub(r'\s+br\s+',' ',review)
-    review = re.sub(r'\s+[a-z]\s+', ' ',review)
-    review = re.sub(r'^b\s+', '', review)
-    review = re.sub(r'\s+', ' ', review)
+for i in range(0, len(X)): #instead of 2000 to make it dynamic
+    review = re.sub(r'\W', ' ', str(X[i])) #Remove all special characters
+    review = review.lower()  # Lowercase
+    #review = re.sub(r'^br$', ' ', review)  
+    #review = re.sub(r'\s+br\s+',' ',review) 
+    review = re.sub(r'\s+[a-z]\s+', ' ',review) #remove all single characters
+    review = re.sub(r'^[a-z]\s+', ' ',review) #remove all single characters
+    #review = re.sub(r'^b\s+', '', review)
+    review = re.sub(r'\s+', ' ', review) #substitute all multiple spaces with single one
     corpus.append(review)    
-        
 
 # Creating the BOW model
 from sklearn.feature_extraction.text import CountVectorizer
@@ -77,3 +77,41 @@ sent_pred = classifier.predict(text_test)
 
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(sent_test, sent_pred)
+print("Accuracy: ",(cm[0][0]+cm[1][1])*100/400)
+
+
+
+
+
+print("\n\n\nOTHER PARAMETERS\n\n\n")
+def testing_pars(max_features, min_df , max_df):
+    vectorizer = TfidfVectorizer(max_features = max_features, min_df = min_df, max_df = max_df, stop_words = stopwords.words('english'))
+    X = vectorizer.fit_transform(corpus).toarray()
+    
+    
+    # Splitting the dataset into the Training set and Test set
+    from sklearn.model_selection import train_test_split
+    text_train, text_test, sent_train, sent_test = train_test_split(X, y, test_size = 0.20, random_state = 0)
+    
+    
+    # Training the classifier
+    from sklearn.linear_model import LogisticRegression
+    classifier = LogisticRegression()
+    classifier.fit(text_train,sent_train)
+    
+    
+    # Testing model performance
+    sent_pred = classifier.predict(text_test)
+    
+    
+    from sklearn.metrics import confusion_matrix
+    cm = confusion_matrix(sent_test, sent_pred)
+    return (cm[0][0]+cm[1][1])*100/400
+
+
+for fe in [100,500,1000,1500,1750,2000,2250,2500,2750,3000,4000]:
+    for mindf in range(1,10):
+        for mxdf in [0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9]:
+            score = testing_pars(fe,mindf,mxdf)
+            if score > 85.:
+                print("Score:",score,"   with:",fe,mindf,mxdf)

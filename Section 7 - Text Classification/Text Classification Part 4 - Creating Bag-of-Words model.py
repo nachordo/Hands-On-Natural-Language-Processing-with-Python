@@ -44,5 +44,9 @@ for i in range(0, 2000):
 
 # Creating the BOW model
 from sklearn.feature_extraction.text import CountVectorizer
-vectorizer = CountVectorizer(max_features = 2000, min_df = 3, max_df = 0.6, stop_words = stopwords.words('english'))
+vectorizer = CountVectorizer(max_features = 2000,
+                             min_df = 3, # excluded those that appear only in 3 or less documents
+                             max_df = 0.6, # Very common words that wont help classifying
+                             stop_words = stopwords.words('english'))
+
 X = vectorizer.fit_transform(corpus).toarray()
