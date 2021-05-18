@@ -9,7 +9,7 @@ import numpy as np
 # pd.Series(self, data=None, index=None, dtype=None, name=None, copy=False, fastpath=False)
 
 x = pd.Series([1,2,3,4,5])
-
+xraw = pd.Series([1,2,3,4,5])
 x + 100
 
 (x ** 2) + 100

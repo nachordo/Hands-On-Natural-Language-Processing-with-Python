@@ -4,6 +4,7 @@
 
 # Tokenization of paragraphs/sentences
 import nltk
+nltk.download('averaged_perceptron_tagger')
 
 paragraph = """Thank you all so very much. Thank you to the Academy. 
                Thank you to all of you in this room. I have to congratulate 

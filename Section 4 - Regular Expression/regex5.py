@@ -9,6 +9,7 @@ X = ["This is a wolf @scary",
      "Remember the name s - John",
      "I                love               you"]
 
+Xraw=X.copy() #if we do not copy, it will be the same
 
 for i in range(len(X)):
     X[i] = re.sub(r"\W"," ",X[i])
@@ -17,3 +18,7 @@ for i in range(len(X)):
     X[i] = re.sub(r"\s+"," ",X[i])
     X[i] = re.sub(r"^\s","",X[i])
     X[i] = re.sub(r"\s$","",X[i])
+    
+
+print(X)
+print(Xraw)

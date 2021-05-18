@@ -24,7 +24,7 @@ arr.shape
 
 arr.size
 arr.dtype
-arr.itemsize
+arr.itemsize #number of bytes
 
 # Memory Usage
 arr.itemsize * arr.size
@@ -67,8 +67,9 @@ np.random.random((3,4))
 
 rarr = np.random.random((3,4))
 
-np.max(rarr, axis=0)
-np.max(rarr, axis=1)
+np.max(rarr, axis=0) # first dim, returns array with 4 dim
+np.max(rarr, axis=1) # second dim, returns array with 3 dim
+np.max(rarr) #global
 
 np.min(rarr, axis=0)
 np.min(rarr, axis=1)

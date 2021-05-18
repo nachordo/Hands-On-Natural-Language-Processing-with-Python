@@ -4,7 +4,8 @@
 
 # Tokenization of paragraphs/sentences
 import nltk
-
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 paragraph = """The Taj Mahal was built by Emperor Shah Jahan"""
                
                
