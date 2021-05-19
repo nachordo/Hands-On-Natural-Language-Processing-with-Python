@@ -17,17 +17,22 @@ access_token = '624310916-E7fDF2IE8P6bfY1oVFglASf6F8RnxMd3vgSXFqnZ'
 access_secret ='ID9JcoXHsDcKtvNcnmBGcCQhUlO0wmwAxBJ6LCesiUAas'
 
 # Initializing the tokens
-auth = OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_secret)
-args = ['trump'];
+from dotenv import load_dotenv
+import os
+load_dotenv()
+cid=os.getenv("APIKEY") # APISECRET TOKEN
+sid=os.getenv("APISECRET") 
+tid=os.getenv("TOKEN") 
+# Initializing the tokens
+auth = tweepy.AppAuthHandler(cid, sid)
 api = tweepy.API(auth,timeout=10)
 
 # Fetching the tweets
 list_tweets = []
-
+args = ['nintendo'];
 query = args[0]
 if len(args) == 1:
-    for status in tweepy.Cursor(api.search,q=query+" -filter:retweets",lang='en',result_type='recent',geocode="22.1568,89.4332,500km").items(100):
+    for status in tweepy.Cursor(api.search,q=query+" -filter:retweets",lang='en',result_type='recent',geocode="22.1568,89.4332,5000km").items(100):
         list_tweets.append(status.text)
         
 # Loading the vectorizer and classfier
@@ -42,6 +47,7 @@ total_neg = 0
 
 # Preprocessing the tweets and predicting sentiment
 for tweet in list_tweets:
+    print(tweet)
     tweet = re.sub(r"^https://t.co/[a-zA-Z0-9]*\s", " ", tweet)
     tweet = re.sub(r"\s+https://t.co/[a-zA-Z0-9]*\s", " ", tweet)
     tweet = re.sub(r"\s+https://t.co/[a-zA-Z0-9]*$", " ", tweet)
@@ -71,8 +77,10 @@ for tweet in list_tweets:
     tweet = re.sub(r"\s+"," ",tweet)
     sent = classifier.predict(tfidf.transform([tweet]).toarray())
     if sent[0] == 1:
+        print("POSITIVE")
         total_pos += 1
     else:
+        print("NEGATIVE")
         total_neg += 1
     
 # Visualizing the results
@@ -84,6 +92,6 @@ y_pos = np.arange(len(objects))
 plt.bar(y_pos,[total_pos,total_neg],alpha=0.5)
 plt.xticks(y_pos,objects)
 plt.ylabel('Number')
-plt.title('Number of Postive and NEgative Tweets')
+plt.title('Number of Postive and Negative Tweets')
 
 plt.show()
